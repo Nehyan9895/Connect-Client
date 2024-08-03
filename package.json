@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm run generate-html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:Client": "node dist/client/server/server.mjs"
+    "serve:ssr:Client": "node dist/client/server/server.mjs",
+    "generate-html": "mkdir -p dist && cp index.html dist/"
   },
   "private": true,
   "dependencies": {
