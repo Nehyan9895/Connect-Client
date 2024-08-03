@@ -1,0 +1,11 @@
+/* styles.scss */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import 'ngx-toastr/toastr';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.new-bg{
+    background-color:rgba(72, 163, 238, 0.418);
+}

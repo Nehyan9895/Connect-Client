@@ -1,0 +1,11 @@
+<aside class="w-full h-full new-bg p-4 space-y-4">
+    <nav>
+        <ul class="space-y-4">
+            <li><a href="#" [routerLink]="['/admin/dashboard']" routerLinkActive="active" class="nav-link">Dashboard</a></li>
+            <li><a href="#" [routerLink]="['/admin/user-list']" routerLinkActive="active" class="nav-link">Users</a></li>
+            <li><a href="#" [routerLink]="['/admin/recruiter-list']" routerLinkActive="active" class="nav-link">Employers</a></li>
+            <li><a href="#" class="nav-link" routerLinkActive="active">Issues</a></li>
+            <li><a href="#" (click)="logout()" class="nav-link" routerLinkActive="active">Logout</a></li>
+        </ul>
+    </nav>
+</aside>

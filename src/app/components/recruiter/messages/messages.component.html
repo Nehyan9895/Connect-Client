@@ -1,0 +1,100 @@
+<app-recruiter-header class="h-12"></app-recruiter-header> <!-- Reduced height of the header -->
+<main class="flex h-[calc(100vh-6em)] bg-[#36393f] overflow-hidden"> <!-- Adjusted height calculation -->
+  <app-recruiter-sidebar class="w-1/5"></app-recruiter-sidebar> <!-- Changed to w-1/5 -->
+  <div class="flex-1 flex flex-col h-full w-full" id="main-content-wrapper">
+    <div class="flex flex-col h-full">
+      <nav id="heading" class="w-full new-bg border-b border-[#2f3136] h-12"> <!-- Adjusted height of the nav -->
+        <div class="px-4 py-3 h-full">
+          <div class="flex items-center justify-between h-full">
+            <div class="flex items-center">
+              <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+                id="toggle-sidebar" type="button"
+                class="inline-flex items-center p-2 text-sm text-[#b9bbbe] rounded-md sm:hidden hover:bg-[#2f3136] focus:outline-none focus:ring-2 focus:ring-[#5865f2]">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                  </path>
+                </svg>
+              </button>
+              <div class="flex items-center ml-2 sm:ml-0">
+                <button [routerLink]="['/recruiter/applicants']">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+                
+                <div class="relative mr-3">
+                  
+                  <img class="w-10 h-10 rounded-full" [src]="userImage" alt="User profile">
+                  <div *ngIf="isFriendOnline$ | async" class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#202225]"></div>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-lg font-semibold text-white">{{username}}</span>
+                  <span *ngIf="isFriendOnline$ | async; else offline" class="text-xs text-green-400">Online</span>
+                  <ng-template #offline><span class="text-xs text-gray-400">Offline</span></ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex-1 flex flex-col bg-[#36393f] overflow-hidden">
+        <div class="flex-1 overflow-y-auto px-4 py-6" id="scrollContainer" #scrollContainer>
+          <ng-container *ngIf="messages.length; else noMessages">
+            <div *ngFor="let msg of messages" class="flex mb-4" [ngClass]="{'justify-end': isCurrentUser(msg.senderId._id)}">
+              <div class="flex items-start" [ngClass]="{'flex-row-reverse': isCurrentUser(msg.senderId._id)}">
+                <img [src]="msg.senderId.image" alt="User avatar" class="w-10 h-10 rounded-full" [ngClass]="{'mr-3': !isCurrentUser(msg.senderId._id), 'ml-3': isCurrentUser(msg.senderId._id)}">
+                <div>
+                  <div class="flex items-baseline mb-1" [ngClass]="{'justify-end': isCurrentUser(msg.senderId._id)}">
+                    <span class="text-[#ffffff] font-medium" [ngClass]="{'mr-2': !isCurrentUser(msg.senderId._id), 'ml-2 order-2': isCurrentUser(msg.senderId._id)}">
+                      {{ msg.senderId.username }}
+                    </span>
+                    <span class="text-[#72767d] text-xs">{{ formatTime(msg.updatedAt) }}</span>
+                  </div>
+                  <div class="rounded-lg px-4 py-2 max-w-md" [ngClass]="{'bg-[#40444b]': !isCurrentUser(msg.senderId._id), 'bg-[#5865f2]': isCurrentUser(msg.senderId._id)}">
+                    <p class="text-white text-sm">{{ msg.message }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #noMessages>
+            <div class="flex-grow flex flex-col items-center justify-center text-center">
+              <svg class="svg-icon w-12 h-12" viewBox="0 0 20 20">
+                <path d="M14.999,8.543c0,0.229-0.188,0.417-0.416,0.417H5.417C5.187,8.959,5,8.772,5,8.543s0.188-0.417,0.417-0.417h9.167C14.812,8.126,14.999,8.314,14.999,8.543 M12.037,10.213H5.417C5.187,10.213,5,10.4,5,10.63c0,0.229,0.188,0.416,0.417,0.416h6.621c0.229,0,0.416-0.188,0.416-0.416C12.453,10.4,12.266,10.213,12.037,10.213 M14.583,6.046H5.417C5.187,6.046,5,6.233,5,6.463c0,0.229,0.188,0.417,0.417,0.417h9.167c0.229,0,0.416-0.188,0.416-0.417C14.999,6.233,14.812,6.046,14.583,6.046 M17.916,3.542v10c0,0.229-0.188,0.417-0.417,0.417H9.373l-2.829,2.796c-0.117,0.116-0.71,0.297-0.71-0.296v-2.5H2.5c-0.229,0-0.417-0.188-0.417-0.417v-10c0-0.229,0.188-0.417,0.417-0.417h15C17.729,3.126,17.916,3.313,17.916,3.542 M17.083,3.959H2.917v9.167H6.25c0.229,0,0.417,0.187,0.417,0.416v1.919l2.242-2.215c0.079-0.077,0.184-0.12,0.294-0.12h7.881V3.959z"></path>
+              </svg>
+          
+              <p class="text-white text-lg font-semibold">No messages available</p>
+              <p class="text-gray-400 mt-1 text-sm">Start a new conversation!</p>
+            </div>
+          </ng-template>
+          
+          
+        </div>
+
+        <div class="px-2 py-2 bg-[#40444b] mb-3 mr-3 rounded-md">
+          <div class="relative">
+            <input 
+              type="text" 
+              [(ngModel)]="message" 
+              (keydown.enter)="sendMessage()"
+              class="w-full bg-[#40444b] text-[#dcddde] rounded-md pl-4 pr-12 py-2 focus:outline-0 focus:ring-0 transition-all"
+              placeholder="Type a message...">
+            <button 
+              (click)="sendMessage()" 
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 text-[#b9bbbe] hover:text-[#dcddde] transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+              </svg>
+              
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>

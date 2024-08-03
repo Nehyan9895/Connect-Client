@@ -1,0 +1,49 @@
+    <app-recruiter-header></app-recruiter-header>
+    <div class="flex flex-col md:flex-row">
+      <app-recruiter-sidebar class="w-1/5"></app-recruiter-sidebar>
+        <main class="flex-1 bg-white p-6 rounded-lg mt-4 md:mt-0 md:ml-4">
+          <div class="flex flex-col md:flex-row items-center mb-4">
+            <input type="text" placeholder="Search candidates by skill" class="flex-1 border border-gray-300 rounded-md p-2">
+            <select class="mt-2 md:mt-0 md:ml-2 border border-gray-300 rounded-md p-2">
+              <option>All</option>
+            </select>
+          </div>
+          <section>
+            <h2 class="text-xl font-bold mb-4">Jobs</h2>
+            <div *ngFor="let jobData of displayedJobs" class="bg-gray-100 p-4 rounded-lg mb-6">
+              <div class="flex flex-col md:flex-row justify-between mb-2">
+                <h3 class="text-lg font-medium">{{ jobData.job_title }}</h3>
+                <div class="flex space-x-2 mt-2 md:mt-0">
+                  <button class="bg-[#D3A8FF] text-[#333] py-1 px-3 rounded-md" (click)="block()">De-activate</button>
+                  <button class="bg-[#D3A8FF] text-[#333] py-1 px-3 rounded-md" (click)="getJobById(jobData.job_id)">Edit</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><strong>Job Code:</strong> {{ jobData.job_id }}</div>
+                <div><strong>Location:</strong> {{ jobData.job_location }}</div>
+                <div><strong>Job Type:</strong> {{ jobData.job_type | jobType }}</div>
+                <div><strong>Salary:</strong> {{ jobData.salary_range_min }} - {{ jobData.salary_range_max }} in LPA</div>
+                <div>
+                  <strong>Skills:</strong>
+                  <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
+                    <span *ngFor="let skill of jobData.skills_required" class="bg-[#00EFFF] text-white py-1 px-2 rounded-md text-sm font-medium">{{ skill }}</span>
+                  </div>
+                </div>
+                <div><strong>Experience:</strong> {{ jobData.experience_required }} Years</div>
+                <div><strong>Last Date:</strong> {{ jobData.last_date | date:'MM/dd/yyyy' }}</div>
+              </div>
+            </div>
+            <mat-paginator
+              [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="handlePageEvent($event)">
+            </mat-paginator>
+          </section>
+          
+          
+          
+        </main>
+      </div>
+    <!-- footer -->
+    <app-footer></app-footer>

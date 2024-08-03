@@ -1,0 +1,7 @@
+<nav class="w-full h-full new-bg p-4 space-y-4">
+  <button class="nav-link" [routerLink]="['/recruiter/create-job']" routerLinkActive="active">Post Job +</button>
+  <button class="nav-link" [routerLink]="['/recruiter/applications']" routerLinkActive="active">Applications</button>
+  <button class="nav-link" [routerLink]="['/recruiter/interviews']" routerLinkActive="active">Interviews</button>
+  <button class="nav-link" (click)="logout()">Sign Out</button>
+</nav>
+
