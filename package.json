@@ -4,11 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && npm run generate-html",
+    "build": "ng build  ",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:Client": "node dist/client/server/server.mjs",
-    "generate-html": "mkdir -p dist && cp index.html dist/"
+    "serve:ssr:Client": "node dist/client/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -32,6 +31,7 @@
     "canvasjs": "^1.8.3",
     "chart.js": "^4.4.3",
     "express": "^4.18.2",
+    "localstorage-polyfill": "^1.0.1",
     "ng2-charts": "^6.0.1",
     "ngx-otp-input": "^0.11.4",
     "ngx-socket-io": "^4.6.1",
