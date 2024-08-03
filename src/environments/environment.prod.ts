@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
+    production: true,
     userApiKey: 'https://connect.clothingcue.store/candidate',
     adminApiKey: 'https://connect.clothingcue.store/admin',
     recruiterApiKey: 'https://connect.clothingcue.store/recruiter',
