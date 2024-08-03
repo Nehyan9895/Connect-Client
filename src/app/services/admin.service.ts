@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.prod';
 import { ResponseModel } from '../models/userResponseModel';
 import { AdminLoginResponse } from '../models/adminResponseModel';
 import { ICandidate } from '../models/candidate.model';

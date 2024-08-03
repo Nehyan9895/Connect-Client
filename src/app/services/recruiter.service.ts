@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.prod';
 import { Observable } from 'rxjs';
 import { Job, JobPosting, RecruiterJob } from '../models/job.model';
 import { JwtHelperService } from '@auth0/angular-jwt';

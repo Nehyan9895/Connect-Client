@@ -4,7 +4,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment.prod';
 import { HomeJob, Job, JobForApplication, JobPosting, RawJobData } from '../models/job.model';
 import { ForgetResponse, JobApplicationStatistics, JobApplyResponse, LoginResponse, ProfileResponse, ResendOtpResponse, ResponseModel, SignupResponse, UserDetails, VerifyForgetResponse, VerifyOtpResponse } from '../models/userResponseModel';
 import { BasicCandidateData, CandidateData, Education, ExperienceData } from '../models/candidateData.interface';
