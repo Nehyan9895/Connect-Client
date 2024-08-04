@@ -15,7 +15,7 @@ import { userAuthInterceptor } from './services/interceptor/user-auth.intercepto
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 
-const config: SocketIoConfig = { url: 'http://localhost:5001', options: {} };
+const config: SocketIoConfig = { url: 'http://connect.clothingcue.store', options: {} };
 
 export const appConfig: ApplicationConfig = {
   providers: [
