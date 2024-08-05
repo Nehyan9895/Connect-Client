@@ -44,38 +44,46 @@ export class VideoCallComponent {
     if (isPlatformBrowser(this.platformId)) {
       const roomID = getUrlParams().get('roomID') as string;
   
-      // Dynamically import the ZegoUIKitPrebuilt library
-      const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
+      try {
+        // Dynamically import the ZegoUIKitPrebuilt library
+        const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
+        
+        // Check if the ZegoUIKitPrebuilt object and method exist
+        if (ZegoUIKitPrebuilt && typeof ZegoUIKitPrebuilt.generateKitTokenForTest === 'function') {
+          // Generate Kit Token
+          const appID = 1251187934;
+          const serverSecret = "fe08cd51dd52b9562b35016a17b5c3f6";
+          const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), 'Muhammed Nehyan');
   
-      // Generate Kit Token
-      const appID = 1251187934;
-      const serverSecret = "fe08cd51dd52b9562b35016a17b5c3f6";
-      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), 'Muhammed Nehyan');
+          // Create instance object from Kit Token
+          const zp = ZegoUIKitPrebuilt.create(kitToken);
   
-      // Create instance object from Kit Token
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
-  
-      // Start a call
-      zp.joinRoom({
-        container: this.root.nativeElement,
-        sharedLinks: [
-          {
-            name: 'Personal link',
-            url:
-              window.location.protocol + '//' +
-              window.location.host + window.location.pathname +
-              '?roomID=' +
-              roomID,
-          },
-        ],
-        scenario: {
-          mode: ZegoUIKitPrebuilt.OneONoneCall, // To implement 1-on-1 calls, modify the parameter here to [ZegoUIKitPrebuilt.OneONoneCall].
-        },
-        turnOnMicrophoneWhenJoining: true, // Automatically turn on the microphone when joining
-        turnOnCameraWhenJoining: true, // Automatically turn on the camera when joining
-        showPreJoinView: false, // Skip the pre-join view
-      });
-  
+          // Start a call
+          zp.joinRoom({
+            container: this.root.nativeElement,
+            sharedLinks: [
+              {
+                name: 'Personal link',
+                url: window.location.protocol + '//' +
+                window.location.host + window.location.pathname +
+                '?roomID=' +
+                roomID,
+              },
+            ],
+            scenario: {
+              mode: ZegoUIKitPrebuilt.OneONoneCall,
+            },
+            turnOnMicrophoneWhenJoining: true,
+            turnOnCameraWhenJoining: true,
+            showPreJoinView: false,
+          });
+        } else {
+          console.error('ZegoUIKitPrebuilt or generateKitTokenForTest is not available');
+        }
+      } catch (error) {
+        console.error('Error loading ZegoUIKitPrebuilt:', error);
+      }
     }
   }
+  
 }  
