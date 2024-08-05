@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 
 function randomID(len: number) {
   let result = '';
-  if (result) return result;
   var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
     maxPos = chars.length,
     i;
@@ -17,9 +16,7 @@ function randomID(len: number) {
   return result;
 }
 
-export function getUrlParams(
-  url = window.location.href
-) {
+export function getUrlParams(url = window.location.href) {
   let urlStr = url.split('?')[1];
   return new URLSearchParams(urlStr);
 }
@@ -32,42 +29,37 @@ export function getUrlParams(
   styleUrls: ['./video-call.component.scss']
 })
 export class VideoCallComponent {
-  @ViewChild('root')
-  root!: ElementRef;
+  @ViewChild('root') root!: ElementRef;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private route: ActivatedRoute
   ) {}
-  
+
   async ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const roomID = getUrlParams().get('roomID') as string;
-  
+
       try {
         // Dynamically import the ZegoUIKitPrebuilt library
         const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
         
-        // Check if the ZegoUIKitPrebuilt object and method exist
-        if (ZegoUIKitPrebuilt && typeof ZegoUIKitPrebuilt.generateKitTokenForTest === 'function') {
+        if (ZegoUIKitPrebuilt && ZegoUIKitPrebuilt.create) {
           // Generate Kit Token
           const appID = 1251187934;
           const serverSecret = "fe08cd51dd52b9562b35016a17b5c3f6";
-          const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), 'Muhammed Nehyan');
-  
+          const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(appID, serverSecret, roomID, randomID(5), 'Muhammed Nehyan');
+
           // Create instance object from Kit Token
           const zp = ZegoUIKitPrebuilt.create(kitToken);
-  
+
           // Start a call
           zp.joinRoom({
             container: this.root.nativeElement,
             sharedLinks: [
               {
                 name: 'Personal link',
-                url: window.location.protocol + '//' +
-                window.location.host + window.location.pathname +
-                '?roomID=' +
-                roomID,
+                url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
               },
             ],
             scenario: {
@@ -78,12 +70,11 @@ export class VideoCallComponent {
             showPreJoinView: false,
           });
         } else {
-          console.error('ZegoUIKitPrebuilt or generateKitTokenForTest is not available');
+          console.error('ZegoUIKitPrebuilt or required methods are not available');
         }
       } catch (error) {
         console.error('Error loading ZegoUIKitPrebuilt:', error);
       }
     }
   }
-  
-}  
+}
