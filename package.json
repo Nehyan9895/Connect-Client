@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm install @zegocloud/zego-uikit-prebuilt",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:Client": "node dist/client/server/server.mjs"
@@ -61,6 +61,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "typescript": "~5.4.2"
+    "typescript": "~5.4.2",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }
