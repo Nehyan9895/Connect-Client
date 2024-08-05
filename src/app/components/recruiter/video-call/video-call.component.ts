@@ -3,6 +3,8 @@ import { Component, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/
 import { FormsModule } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import {ZegoUIKitPrebuilt} from '@zegocloud/zego-uikit-prebuilt';
+
 
 function randomID(len: number) {
   let result = '';
@@ -46,7 +48,6 @@ export class VideoCallComponent {
   
       try {
         // Dynamically import the ZegoUIKitPrebuilt library
-        const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
         
         // Check if the ZegoUIKitPrebuilt object and method exist
         if (ZegoUIKitPrebuilt && typeof ZegoUIKitPrebuilt.generateKitTokenForTest === 'function') {
