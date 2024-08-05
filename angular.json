@@ -24,6 +24,7 @@
               "zone.js"
             ],
             "allowedCommonJsDependencies": [
+              "@zegocloud/zego-uikit-prebuilt",
               "debug",
               "@canvasjs/charts",
               "xmlhttprequest-ssl"
