@@ -14,7 +14,7 @@ import { adminRoute } from './routes/admin.route';
 import { userAuthInterceptor } from './services/interceptor/user-auth.interceptor';
 // import { recruiterAuthInterceptor } from './services/interceptor/recruiter-auth.interceptor';
 
-const config: SocketIoConfig = { url: 'http://connect.clothingcue.store', options: {} };
+const config: SocketIoConfig = { url: 'https://connect.clothingcue.store', options: {} };
 
 export const appConfig: ApplicationConfig = {
   providers: [
