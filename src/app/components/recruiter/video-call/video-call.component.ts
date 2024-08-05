@@ -44,31 +44,41 @@ export class VideoCallComponent {
         // Dynamically import the ZegoUIKitPrebuilt library
         const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
         
-          // Generate Kit Token
-          const appID = 1251187934;
-          const serverSecret = "fe08cd51dd52b9562b35016a17b5c3f6";
-          const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(appID, serverSecret, roomID, randomID(5), 'Muhammed Nehyan');
+        if (ZegoUIKitPrebuilt) {
+          console.log('ZegoUIKitPrebuilt loaded:', ZegoUIKitPrebuilt);
 
-          // Create instance object from Kit Token
-          const zp = ZegoUIKitPrebuilt.create(kitToken);
+          // Check if methods exist
+          if (typeof ZegoUIKitPrebuilt.generateKitTokenForTest === 'function' && typeof ZegoUIKitPrebuilt.create === 'function') {
+            // Generate Kit Token
+            const appID = 1251187934;
+            const serverSecret = "fe08cd51dd52b9562b35016a17b5c3f6";
+            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), 'Muhammed Nehyan');
 
-          // Start a call
-          zp.joinRoom({
-            container: this.root.nativeElement,
-            sharedLinks: [
-              {
-                name: 'Personal link',
-                url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
+            // Create instance object from Kit Token
+            const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+            // Start a call
+            zp.joinRoom({
+              container: this.root.nativeElement,
+              sharedLinks: [
+                {
+                  name: 'Personal link',
+                  url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
+                },
+              ],
+              scenario: {
+                mode: ZegoUIKitPrebuilt.OneONoneCall,
               },
-            ],
-            scenario: {
-              mode: ZegoUIKitPrebuilt.OneONoneCall,
-            },
-            turnOnMicrophoneWhenJoining: true,
-            turnOnCameraWhenJoining: true,
-            showPreJoinView: false,
-          });
-        
+              turnOnMicrophoneWhenJoining: true,
+              turnOnCameraWhenJoining: true,
+              showPreJoinView: false,
+            });
+          } else {
+            console.error('Required methods not available in ZegoUIKitPrebuilt');
+          }
+        } else {
+          console.error('ZegoUIKitPrebuilt not loaded');
+        }
       } catch (error) {
         console.error('Error loading ZegoUIKitPrebuilt:', error);
       }
