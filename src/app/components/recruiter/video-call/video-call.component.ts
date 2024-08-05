@@ -41,9 +41,12 @@ export class VideoCallComponent {
       const roomID = getUrlParams().get('roomID') as string;
 
       try {
-        // Dynamically import the ZegoUIKitPrebuilt library
-        const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
-        
+        // Test dynamic import
+        const module = await import('@zegocloud/zego-uikit-prebuilt');
+        console.log('Module loaded:', module);
+
+        const ZegoUIKitPrebuilt = module.ZegoUIKitPrebuilt;
+
         if (ZegoUIKitPrebuilt) {
           console.log('ZegoUIKitPrebuilt loaded:', ZegoUIKitPrebuilt);
 
