@@ -44,7 +44,6 @@ export class VideoCallComponent {
         // Dynamically import the ZegoUIKitPrebuilt library
         const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
         
-        if (ZegoUIKitPrebuilt && ZegoUIKitPrebuilt.create) {
           // Generate Kit Token
           const appID = 1251187934;
           const serverSecret = "fe08cd51dd52b9562b35016a17b5c3f6";
@@ -69,9 +68,7 @@ export class VideoCallComponent {
             turnOnCameraWhenJoining: true,
             showPreJoinView: false,
           });
-        } else {
-          console.error('ZegoUIKitPrebuilt or required methods are not available');
-        }
+        
       } catch (error) {
         console.error('Error loading ZegoUIKitPrebuilt:', error);
       }
